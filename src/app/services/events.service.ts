@@ -18,20 +18,33 @@ export class EventsService {
   }
 
   format(data) {
-    let matches = [];
+    let matches = {},
+      mdate = null,
+      month = 0,
+      base = null;
+
     for (let round of data['rounds']) {
       for (let match of round['matches']) {
-        matches.push({
-          date: match['date'],
-          title: `${match['team1']['code']} x ${match['team2']['code']}`
-        });
+        mdate = moment.utc(match['date']);
+        if (!month) {
+          base = mdate;
+          month = mdate.month();
+        }
+        // check if the match corresponds to the same month
+        if (month === mdate.month()) {
+          if (!matches[mdate.date()]) {
+            matches[mdate.date()] = [];
+          }
+          matches[mdate.date()].push({
+            title: `${match['team1']['code']} x ${match['team2']['code']}`
+          })
+        }
       }
     }
 
     // build the grid
-    let base = moment.utc(matches[0]['date']);
     let first = base.date(1).toString().substr(0, 3);
-    let last = base.endOf('month').toString().substr(8, 2);
+    let last = base.endOf('month').date();
 
     let grid = [],
       flag = true,
@@ -49,15 +62,21 @@ export class EventsService {
           // already finished the month
         } else if (d > 0) {
           // end of the month check
-          if (d === Number(last)) {
+          if (d === last) {
             flag = false;
           } else {
             d++;
-            grid[i][days.indexOf(day)]['num'] = d;
+            grid[i][days.indexOf(day)] = {
+              'num': d,
+              'matches': matches[d] ? matches[d] : []
+            };
           }
         } else if (i === 0 && first === day) {
           d++;
-          grid[i][days.indexOf(day)]['num'] = d;
+          grid[i][days.indexOf(day)] = {
+            'num': d,
+            'matches': matches[d] ? matches[d] : []
+          };
         }
       }
       i++;  // pass to the next week
