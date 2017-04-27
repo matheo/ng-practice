@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 export class EventsService {
 
   grid$: BehaviorSubject<any> = new BehaviorSubject([]);
+  title$: BehaviorSubject<any> = new BehaviorSubject('');
 
   constructor(
     private http: Http
@@ -28,7 +29,8 @@ export class EventsService {
         mdate = moment.utc(match['date']);
         if (!month) {
           base = mdate;
-          month = mdate.month();
+          month = base.month();
+          this.title$.next(`${data['name']} (${base.format('MMMM')})`);
         }
         // check if the match corresponds to the same month
         if (month === mdate.month()) {
