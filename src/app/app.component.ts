@@ -6,5 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'pr works!';
 }
+
+/*
+An app with a calendar component:
+- Displays a single month at a time
+- Receives a list of events
+- Any day could contain zero or more events
+- No event spans more than a single day
+
+Event structure:
+- Date
+- Title (code field, format COD1 x COD2)
+*/

@@ -1,0 +1,12 @@
+
+.month {
+  border: 1px solid black;
+}
+.month .week {
+  display: flex;
+  min-height: 50px;
+  border-bottom: 1px solid black;
+}
+.month .week .day {
+  flex: 1;
+}

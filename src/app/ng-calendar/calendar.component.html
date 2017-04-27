@@ -1,0 +1,10 @@
+
+<h1>Month Name</h1>
+
+<div class="month">
+  <div class="week" *ngFor="let week of grid">
+    <div class="day" *ngFor="let day of week">
+      {{ day.day }}
+    </div>
+  </div>
+</div>
