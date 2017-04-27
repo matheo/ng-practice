@@ -1,12 +1,41 @@
 
 .month {
   border: 1px solid black;
-}
-.month .week {
-  display: flex;
-  min-height: 50px;
-  border-bottom: 1px solid black;
-}
-.month .week .day {
-  flex: 1;
+
+  .days {
+    display: flex;
+
+    .day {
+      flex: 1;
+      background: #ccc;
+      padding: 3px;
+      text-align: center;
+    }
+  }
+
+  .week {
+    display: flex;
+    min-height: 50px;
+    border-bottom: 1px dashed #555;
+
+    .day {
+      flex: 1;
+      border-right: 1px dashed #555;
+      padding: 7px;
+
+      span {
+        background: #ddd;
+        padding: 2px 5px;
+        margin-right: 5px;
+      }
+    }
+
+    .day:last-child {
+      border-right: none;
+    }
+  }
+
+  .week:last-child {
+    border-bottom: none;
+  }
 }

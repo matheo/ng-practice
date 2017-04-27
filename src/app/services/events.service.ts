@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class EventsService {
 
-  grid$: BehaviorSubject<Object> = new BehaviorSubject({});
+  grid$: BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(
     private http: Http
@@ -27,6 +27,7 @@ export class EventsService {
         });
       }
     }
+
     // build the grid
     let base = moment.utc(matches[0]['date']);
     let first = base.date(1).toString().substr(0, 3);
@@ -38,25 +39,30 @@ export class EventsService {
 
     let i = 0, d = 0;
     while (flag) {
+      // initialize the week
       grid[i] = [];
       for (const day of days) {
-        grid[i][days.indexOf(day)] = { day: day };
-        if (d > 0) {
-          grid[i][days.indexOf(day)]['num'] = d;
+        // initialize the day
+        grid[i][days.indexOf(day)] = {};
+        // assign the day number
+        if (!flag) {
+          // already finished the month
+        } else if (d > 0) {
+          // end of the month check
           if (d === Number(last)) {
             flag = false;
           } else {
             d++;
+            grid[i][days.indexOf(day)]['num'] = d;
           }
         } else if (i === 0 && first === day) {
-          grid[i][days.indexOf(day)]['num'] = d;
           d++;
+          grid[i][days.indexOf(day)]['num'] = d;
         }
       }
-      i++;
+      i++;  // pass to the next week
     }
 
-    console.log(grid);
     this.grid$.next(grid);
   }
 }

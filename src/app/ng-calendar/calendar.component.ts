@@ -10,6 +10,7 @@ import { EventsService } from '../services/events.service';
 export class CalendarComponent implements OnInit {
 
   grid: any;
+  days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   constructor(
     private data: EventsService

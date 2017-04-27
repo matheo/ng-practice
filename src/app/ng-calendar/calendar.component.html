@@ -2,9 +2,14 @@
 <h1>Month Name</h1>
 
 <div class="month">
+  <div class="days">
+    <div class="day" *ngFor="let day of days">
+      {{ day }}
+    </div>
+  </div>
   <div class="week" *ngFor="let week of grid">
     <div class="day" *ngFor="let day of week">
-      {{ day.day }}
+      <span *ngIf="day.num">{{ day.num }}</span>
     </div>
   </div>
 </div>
