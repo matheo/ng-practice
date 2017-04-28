@@ -1,20 +1,41 @@
 
-<h1>{{ title }}</h1>
 
-<div class="month">
-  <div class="days">
-    <div class="day" *ngFor="let day of days">
-      {{ day }}
+<div class="input-group">
+  <input type="text" class="form-control" placeholder="JSON URL" [(ngModel)]="json">
+  <span class="input-group-btn">
+    <button class="btn btn-primary" type="button" (click)="loadIt()">Load it!</button>
+  </span>
+</div>
+
+<div *ngIf="title; else error">
+  <h1>{{ title }}</h1>
+
+  <div class="month">
+    <div class="days">
+      <div class="day" *ngFor="let day of days">
+        {{ day }}
+      </div>
     </div>
-  </div>
-  <div class="week" *ngFor="let week of grid">
-    <div class="day" *ngFor="let day of week">
-      <p *ngIf="day.num">
-        <strong>{{ day.num }}</strong>
-      </p>
-      <p *ngFor="let match of day.matches">
-        <span>{{ match.title }}</span>
-      </p>
+    <div class="week" *ngFor="let week of grid">
+      <div class="day" *ngFor="let day of week">
+        <p *ngIf="day.num">
+          <strong>{{ day.num }}</strong>
+        </p>
+        <p *ngFor="let match of day.matches">
+          <span>{{ match.title }}</span>
+        </p>
+      </div>
     </div>
   </div>
 </div>
+
+<ng-template #error>
+  <div *ngIf="json; else input" class="alert alert-danger" role="alert">
+    <strong>Oh snap!</strong> The input couldn't be parsed.
+  </div>
+  <ng-template #input>
+    <div class="alert alert-info" role="alert">
+      <strong>Please</strong> provide a JSON URL.
+    </div>
+  </ng-template>
+</ng-template>

@@ -13,9 +13,21 @@ export class EventsService {
   constructor(
     private http: Http
   ) {
-    http.get('https://raw.githubusercontent.com/opendatajson/football.json/master/2015-16/en.1.json')
+  }
+
+  fetch(url) {
+    this.http.get(url)
       .map(res => res.json())
-      .subscribe(data => this.format(data));
+      .subscribe(
+        data => this.format(data),
+        error => this.handleError(error)
+      );
+  }
+
+  handleError(error) {
+    this.grid$.next([]);
+    this.title$.next('');
+    return error;
   }
 
   format(data) {
