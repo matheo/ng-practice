@@ -1,6 +1,6 @@
 {
   "name": "ng-practice",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -9,9 +9,12 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "precommit": "echo 'PreCommit Husky'",
     "commit": "git-cz",
     "commitmsg": "validate-commit-msg",
-    "release": "standard-version"
+    "release": "standard-version",
+    "minor": "git commit -n -m ",
+    "postminor": "npm version patch && git push && git push --tags"
   },
   "private": true,
   "dependencies": {
